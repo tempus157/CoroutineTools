@@ -21,9 +21,9 @@ namespace Tempus.CoroutineTools
 
         public static IEnumerator Start(this IEnumerator coroutine)
         {
-            if (Component.IsStarted(coroutine))
+            if (coroutine.IsStarted())
             {
-                throw new ArgumentException("Coroutine has already started");
+                return coroutine;
             }
 
             var coroutineYield = Component.StartCoroutine(coroutine);
@@ -32,26 +32,26 @@ namespace Tempus.CoroutineTools
             return coroutine;
         }
 
-        public static Coroutine WaitForCompletion(this IEnumerator coroutine)
-        {
-            if (!Component.IsStarted(coroutine))
-            {
-                throw new ArgumentException("Coroutine hasn't started");
-            }
-
-            return Component.GetYield(coroutine);
-        }
-
         public static void Stop(this IEnumerator coroutine)
         {
-            if (!Component.IsStarted(coroutine))
+            if (!coroutine.IsStarted())
             {
-                throw new ArgumentException("Coroutine hasn't started");
+                return;
             }
 
             Component.StopCoroutine(coroutine);
             Component.StopCoroutine(Component.GetYield(coroutine));
             Component.RemoveCoroutine(coroutine);
+        }
+
+        public static Coroutine WaitForCompletion(this IEnumerator coroutine)
+        {
+            if (!coroutine.IsStarted())
+            {
+                throw new ArgumentException("Coroutine hasn't started");
+            }
+
+            return Component.GetYield(coroutine);
         }
 
         public static bool IsStarted(this IEnumerator coroutine)
