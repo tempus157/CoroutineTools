@@ -6,7 +6,7 @@ namespace Tempus.CoroutineTools
 {
     public class CoroutineToolsComponent : MonoBehaviour
     {
-        private Dictionary<IEnumerator, Coroutine> yields = new Dictionary<IEnumerator, Coroutine>();
+        private readonly Dictionary<IEnumerator, Coroutine> yields = new Dictionary<IEnumerator, Coroutine>();
 
         public void AddCoroutine(IEnumerator coroutine, Coroutine yield)
         {

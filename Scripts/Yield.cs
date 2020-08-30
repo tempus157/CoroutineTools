@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,49 +6,49 @@ namespace Tempus.CoroutineTools
 {
     public static class Yield
     {
-        public static readonly object Frame = null;
+        public const object Frame = null;
         public static readonly WaitForEndOfFrame EndOfFrame = new WaitForEndOfFrame();
         public static readonly WaitForFixedUpdate FixedUpdate = new WaitForFixedUpdate();
 
-        private static Dictionary<float, WaitForSeconds> secondsDictionary = new Dictionary<float, WaitForSeconds>();
-        private static Dictionary<float, WaitForSecondsRealtime> secondsRealtimeDictionary = new Dictionary<float, WaitForSecondsRealtime>();
-        private static Dictionary<Func<bool>, WaitUntil> untilDictionary = new Dictionary<Func<bool>, WaitUntil>();
-        private static Dictionary<Func<bool>, WaitWhile> whileDictionary = new Dictionary<Func<bool>, WaitWhile>();
+        private static readonly Dictionary<float, WaitForSeconds> SecondsDictionary = new Dictionary<float, WaitForSeconds>();
+        private static readonly Dictionary<float, WaitForSecondsRealtime> SecondsRealtimeDictionary = new Dictionary<float, WaitForSecondsRealtime>();
+        private static readonly Dictionary<Func<bool>, WaitUntil> UntilDictionary = new Dictionary<Func<bool>, WaitUntil>();
+        private static readonly Dictionary<Func<bool>, WaitWhile> WhileDictionary = new Dictionary<Func<bool>, WaitWhile>();
 
         public static WaitForSeconds Seconds(float seconds)
         {
-            if (!secondsDictionary.ContainsKey(seconds))
+            if (!SecondsDictionary.ContainsKey(seconds))
             {
-                secondsDictionary.Add(seconds, new WaitForSeconds(seconds));
+                SecondsDictionary.Add(seconds, new WaitForSeconds(seconds));
             }
-            return secondsDictionary[seconds];
+            return SecondsDictionary[seconds];
         }
 
         public static WaitForSecondsRealtime SecondsRealtime(float seconds)
         {
-            if (!secondsRealtimeDictionary.ContainsKey(seconds))
+            if (!SecondsRealtimeDictionary.ContainsKey(seconds))
             {
-                secondsRealtimeDictionary.Add(seconds, new WaitForSecondsRealtime(seconds));
+                SecondsRealtimeDictionary.Add(seconds, new WaitForSecondsRealtime(seconds));
             }
-            return secondsRealtimeDictionary[seconds];
+            return SecondsRealtimeDictionary[seconds];
         }
 
         public static WaitUntil Until(Func<bool> predicate)
         {
-            if (!untilDictionary.ContainsKey(predicate))
+            if (!UntilDictionary.ContainsKey(predicate))
             {
-                untilDictionary.Add(predicate, new WaitUntil(predicate));
+                UntilDictionary.Add(predicate, new WaitUntil(predicate));
             }
-            return untilDictionary[predicate];
+            return UntilDictionary[predicate];
         }
 
         public static WaitWhile While(Func<bool> predicate)
         {
-            if (!whileDictionary.ContainsKey(predicate))
+            if (!WhileDictionary.ContainsKey(predicate))
             {
-                whileDictionary.Add(predicate, new WaitWhile(predicate));
+                WhileDictionary.Add(predicate, new WaitWhile(predicate));
             }
-            return whileDictionary[predicate];
+            return WhileDictionary[predicate];
         }
     }
 }
