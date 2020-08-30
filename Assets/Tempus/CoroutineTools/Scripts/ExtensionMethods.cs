@@ -11,7 +11,7 @@ namespace Tempus.CoroutineTools
         {
             get
             {
-                if (component == null)
+                if (!component)
                 {
                     component = new GameObject("CoroutineTools").AddComponent<CoroutineToolsComponent>();
                 }
